@@ -8,13 +8,12 @@
 </head>
 <body>
 <?php
-require 'connect.php';
-mysql_set_charset('utf8');
+require_once 'connect.php';
 $id = $_REQUEST['nk'];
 $sql_select = "SELECT * FROM polka1 WHERE id='$id'";
-$result = mysql_query($sql_select);
-$row = mysql_fetch_array($result);
-if($row) { printf($row['text']); }
+$result = mysqli_query($conn,$sql_select);
+$row = mysqli_fetch_array($result);
+if($row) { printf($row['author']); printf("<br/>"; printf($row['text']); }
 else { echo ("Такой книги в базе нет"); }
 ?>
 <form method='post' action='allauthor.php'><b/>
