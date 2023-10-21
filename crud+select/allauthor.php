@@ -14,8 +14,8 @@ $result = mysqli_query($conn,$sql_select); // Запрос к БД
 $row = mysqli_fetch_array($result); // Разбираем полученый массив 
 do
 {
-  printf("<p>Номер книги: ".$row['id']."</p><p>Автор: ".$row['author']."</p><p>Название: ".$row['title']
-  ."</p>----------------------------------------<b>");
+  printf("<p><b>Номер книги: ".$row['id']."</b></p><p><b>Автор: ".$row['author']."</b></p><p><b>Название: ".$row['title']
+  ."</b></p>----------------------------------------<b>");
 }
 while($row = mysqli_fetch_array($result));
 ?>
