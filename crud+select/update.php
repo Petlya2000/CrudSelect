@@ -10,13 +10,15 @@
 <?php
 require_once 'connect.php';
 $id = $_REQUEST['nk'];
-$sql_update = "UPDATE polka1 
-         SET author = '".mysql_real_escape_string($_POST['author'])."', 
-         SET title = '".mysql_real_escape_string($_POST['title'])."', 
-         SET text = '".mysql_real_escape_string($_POST['text'])."', 
-         WHERE $id='".mysql_real_escape_string($_POST['$id'])."'";
-$result = mysqli_query($conn,$sql_update);
-?>
+<form action="rec1.php" method="post">
+<input type="text" name="author" placeholder="Автор" size="30"><br/>
+<br/>
+<input type="text" name="title" placeholder="Название" size="30"><br/>
+<br/>
+<input  type="text" name="text" placeholder="Текст" size="30"><br/>
+<br/>
+<input id="submit" type="submit" value="Update"><br/>
+</form>
 <form method='post' action='allauthor.php'><b/>
 <input id='submitread'  type='submit' value="Вернуться к поиску"><b/><b/>
 </form>
