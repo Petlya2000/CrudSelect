@@ -10,11 +10,16 @@
 <?php
 require_once 'connect.php';
 $id = $_REQUEST['nk'];
+if (!($id)) {
+  echo("Введите номер книги");
+}
+else {
 $sql_select = "SELECT * FROM polka1 WHERE id='$id'";
 $result = mysqli_query($conn,$sql_select);
 $row = mysqli_fetch_array($result);
 if($row) { printf($row['author']); printf("<br/>"; printf($row['text']); }
 else { echo ("Такой книги в базе нет"); }
+}
 ?>
 <form method='post' action='allauthor.php'><b/>
 <input id='submitread'  type='submit' value="Вернуться к поиску"><b/><b/>
