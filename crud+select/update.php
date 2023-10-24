@@ -4,13 +4,12 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html">
 <link rel="stylesheet" type="text/css" href="style.css">
-<title>Читать</title>
+<title>Обновить</title>
 </head>
 <body>
-<?php
-require_once 'connect.php';
-$id = $_REQUEST['nk'];
 <form action="rec1.php" method="post">
+  <input type="text" name="id" placeholder="Номер книги" size="30"><br/>
+<br/>
 <input type="text" name="author" placeholder="Автор" size="30"><br/>
 <br/>
 <input type="text" name="title" placeholder="Название" size="30"><br/>
