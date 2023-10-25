@@ -7,32 +7,29 @@
 <title>Обновить</title>
 </head>
 <body>
-<form method="post">
-<input type="text" name="author" placeholder="Автор" size="30"><br/>
-<br/>
-<input type="text" name="title" placeholder="Название" size="30"><br/>
-<br/>
-<input  type="text" name="text" placeholder="Текст" size="30"><br/>
-<br/>
-<input id="submit" type="submit" value="Update"><br/>
-</form>
   <?php
 require_once 'connect.php';
 $id = $_REQUEST['nk'];
-if (!($id)) {
-  echo("Введите номер книги");
-}
-else {
-$update_sql = "UPDATE polka1 SET author = '$author', title = '$title', text = '$text' WHERE id = '$id'
-mysqli_query($conn,$update_sql);
-}
-
 ?>
-<form method='post' action='allauthor.php'><b/>
-<input id='submitread'  type='submit' value="Вернуться к поиску"><b/><b/>
-</form>
-<form method="post" action="index.html">
-<input id="submitback" type="submit" value="На главную">
-</form>
+<html><body>
+<form method="post">
+<table>
+<?php $books_query=mysql_query("select * from polka1 where id='$id'");
+$rows=mysql_fetch_array($books_query);
+?>
+<tr><td>Author:</td><td><input type="text" name="author" value="<?php echo $rows['author'];  ?>"></td></tr>
+<tr><td>Title:</td><td><input type="text" name="title" value="<?php echo $rows['title'];  ?>"></td></tr>
+<tr><td>Text:</td><td><input type="text" name="Text" value="<?php echo $rows['text'];  ?>"></td></tr>
+<tr><td></td><td><input type="submit" name="submit" value="save"></td></tr>
+</table></form></body></html>
+<?php 
+if (isset($_POST['submit'])){
+$author=$_POST['author'];
+$title=$_POST['title'];
+$text=$_POST['text'];
+mysql_query("UPDATE polka1 SET author='$author', title ='$title', text='$text' where id='$id'");
+header('location:index.php');
+}
+?>
 </body>
 </html>
