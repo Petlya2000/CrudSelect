@@ -7,33 +7,53 @@
 <title>Update</title>
 </head>
 <body>
-   <?php 
+   <?php
 require_once 'connect.php'; // Подключает файл с логином/паролем и именем БД
-$id = trim($_REQUEST['nk']);
-echo $id
-  <form method='post'><br/>
-    <input type="hidden" name="id" placeholder="Nomer knigi" size="30"><br/>
-    <br/>
-    <input type="text" name="author" placeholder="Author" size="30"><br/>
-    <br/>
-    <input type="text" name="title" placeholder="Title" size="30"><br/>
-    <br/>
-    <input type="text" name="text" placeholder="Text" size="30"><br/>
-    <br/>
-    <input type="submit" id="submit" value="Update"><br/>
-  </form>
-
-$author = trim($_REQUEST['author']); // Получает содержимое поля "Автор" и убирает возможные пробелы в начале строки
-$title = trim($_REQUEST['title']); // То же самое для поля "Название"
-$text = mysqli_real_escape_string($conn,trim($_REQUEST['text'])); // То же самое для поля "Текст" + (см.ниже)    
-$update_sql = "UPDATE polka1 SET author = '$author', title = '$title', text = '$text' WHERE id = '$id'
-mysqli_query($conn,$update_sql); // отправляем данные в базу
+// если запрос GET
+if($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["id"]))
+{
+    $userid = $conn->real_escape_string($_GET["id"]);
+    $sql = "SELECT * FROM Users WHERE id = '$userid'";
+    if($result = $conn->query($sql)){
+        if($result->num_rows > 0){
+            foreach($result as $row){
+                $username = $row["name"];
+                $userage = $row["age"];
+            }
+            echo "<h3>Обновление пользователя</h3>
+                <form method='post'>
+                    <input type='hidden' name='id' value='$userid' />
+                    <p>Имя:
+                    <input type='text' name='name' value='$username' /></p>
+                    <p>Возраст:
+                    <input type='number' name='age' value='$userage' /></p>
+                    <input type='submit' value='Сохранить'>
+            </form>";
+        }
+        else{
+            echo "<div>Пользователь не найден</div>";
+        }
+        $result->free();
+    } else{
+        echo "Ошибка: " . $conn->error;
+    }
+}
+elseif (isset($_POST["id"]) && isset($_POST["name"]) && isset($_POST["age"])) {
+      
+    $userid = $conn->real_escape_string($_POST["id"]);
+    $username = $conn->real_escape_string($_POST["name"]);
+    $userage = $conn->real_escape_string($_POST["age"]);
+    $sql = "UPDATE Users SET name = '$username', age = '$userage' WHERE id = '$userid'";
+    if($result = $conn->query($sql)){
+        header("Location: index.php");
+    } else{
+        echo "Ошибка: " . $conn->error;
+    }
+}
+else{
+    echo "Некорректные данные";
+}
+$conn->close();
 ?>
-  <form method='post' action='allauthor.php'><b/>
-<input id='submitread'  type='submit' value="Вернуться к поиску"><b/><b/>
-</form>
-<form method="post" action="index.html">
-<input id="submitback" type="submit" value="На главную">
-</form>
 </body>
 </html>
