@@ -7,8 +7,12 @@
 <title>Update</title>
 </head>
 <body>
+   <?php 
+require_once 'connect.php'; // Подключает файл с логином/паролем и именем БД
+$id = trim($_REQUEST['nk']);
+echo $id
   <form method='post'><br/>
-    <input type="text" name="id" placeholder="Nomer knigi" size="30"><br/>
+    <input type="hidden" name="id" placeholder="Nomer knigi" size="30"><br/>
     <br/>
     <input type="text" name="author" placeholder="Author" size="30"><br/>
     <br/>
@@ -18,9 +22,7 @@
     <br/>
     <input type="submit" id="submit" value="Update"><br/>
   </form>
- <?php 
-require_once 'connect.php'; // Подключает файл с логином/паролем и именем БД
-$id = trim($_REQUEST['id']);
+
 $author = trim($_REQUEST['author']); // Получает содержимое поля "Автор" и убирает возможные пробелы в начале строки
 $title = trim($_REQUEST['title']); // То же самое для поля "Название"
 $text = mysqli_real_escape_string($conn,trim($_REQUEST['text'])); // То же самое для поля "Текст" + (см.ниже)    
