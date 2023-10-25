@@ -4,66 +4,34 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html">
 <link rel="stylesheet" type="text/css" href="style.css">
-<title>Обновить</title>
+<title>Читать</title>
 </head>
 <body>
-  <?php
 <?php
 require_once 'connect.php';
 $id = $_REQUEST['nk'];
+if (!($id)) {
+  echo("Введите номер книги");
+}
+else {
 $sql_select = "SELECT * FROM polka1 WHERE id='$id'";
 $result = mysqli_query($conn,$sql_select);
-$conn->query($sql) or die(mysql_error());
-
-$query=getenv(QUERY_STRING);
-parse_str($query);
-
-
-$ud_author = $_POST['author'];
-$ud_title = $_POST['title'];
-$ud_text = $_POST['text'];
-
-?>
-<h2>Update Record <?php echo $id;?></h2>
-
-<form action="" method="post">
-<?php
-	
-	
-	while ($row = $result->fetch_assoc()) {?>
-    
-<table border="0" cellspacing="10">
-<tr>
-<td>Title:</td> <td><input type="text" name="updateauthor" value="<?php echo $row['author']; ?>"></td>
-</tr>
-<tr>
-<td>Publisher:</td> <td><input type="text" name="updatetitle" value="<?php echo $row['title']; ?>"></td>
-</tr>
-<tr>
-<td>Publish Date:</td> <td><input type="text" name="updatetext" value="<?php echo $row['text']; ?>"></td>
-</tr>
-
-<tr>
-<td><INPUT TYPE="Submit" VALUE="Update the Record" NAME="Submit"></td>
-</tr>
-</table>
-<?php	}
-	?>
-</form>
-
-
-<?php
-	if(isset($_POST['Submit'])){//if the submit button is clicked
-	
-	$author = $_POST['updateauthor'];
-		$title = $_POST['updatetitle'];
-	$text = $_POST['updatetext'];
-
-	$query="UPDATE polka1 SET author='".$author."', title='".$title."',text='".$text."' where id = '".$id."'";
-
-	mysql_query($query) or die("Cannot update");//update or error
-header('location:allauthor.php');
+$row = mysqli_fetch_array($result);
+if($row) { printf($row['id']);
+	echo "<INPUT type="text" name="author" value="author">; 
+ 	echo "<INPUT type="text" name="title" value="title">;
+	 echo "<INPUT type="text" name="text" value="text">;
+  $update_sql = "UPDATE polka1 SET author = '$author', title = '$title', text = '$text' WHERE id = '$id'
+mysqli_query($conn,$update_sql);
+  }
+}else { echo ("Такой книги в базе нет"); }
 }
 ?>
+<form method='post' action='allauthor.php'><b/>
+<input id='submitread'  type='submit' value="Вернуться к поиску"><b/><b/>
+</form>
+<form method="post" action="index.html">
+<input id="submitback" type="submit" value="На главную">
+</form>
 </body>
 </html>
