@@ -7,9 +7,7 @@
 <title>Обновить</title>
 </head>
 <body>
-<form action="rec1.php" method="post">
-  <input type="text" name="id" placeholder="Номер книги" size="30"><br/>
-<br/>
+<form method="post">
 <input type="text" name="author" placeholder="Автор" size="30"><br/>
 <br/>
 <input type="text" name="title" placeholder="Название" size="30"><br/>
@@ -18,6 +16,18 @@
 <br/>
 <input id="submit" type="submit" value="Update"><br/>
 </form>
+  <?php
+require_once 'connect.php';
+$id = $_REQUEST['nk'];
+if (!($id)) {
+  echo("Введите номер книги");
+}
+else {
+$update_sql = "UPDATE polka1 SET author = '$author', title = '$title', text = '$text' WHERE id = '$id'
+mysqli_query($conn,$update_sql);
+}
+
+?>
 <form method='post' action='allauthor.php'><b/>
 <input id='submitread'  type='submit' value="Вернуться к поиску"><b/><b/>
 </form>
