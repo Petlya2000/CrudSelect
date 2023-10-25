@@ -9,29 +9,25 @@
 <body>
 <?php
 require_once 'connect.php';
-$id = $_REQUEST['nk'];
-if (!($id)) {
-  echo("Введите номер книги");
+$id = mysqli_real_escape_string($conn, $_POST['id']);
+$author = mysqli_real_escape_string($conn, $_POST['author']);
+$title = mysqli_real_escape_string($conn, $_POST['title']);
+$text = mysqli_real_escape_string($conn, $_POST['text']);	
+if(empty($author) || empty($title) || empty($text)) {	
+if(empty($author)) {
+echo '<font color="red">author field is empty.</font><br>';
 }
-else {
-$sql_select = "SELECT * FROM polka1 WHERE id='$id'";
-$result = mysqli_query($conn,$sql_select);
-$row = mysqli_fetch_array($result);
-if($row) { printf($row['id']);
-	echo "<INPUT type="text" name="author" value="author">; 
- 	echo "<INPUT type="text" name="title" value="title">;
-	 echo "<INPUT type="text" name="text" value="text">;
-  $update_sql = "UPDATE polka1 SET author = '$author', title = '$title', text = '$text' WHERE id = '$id'
-mysqli_query($conn,$update_sql);
-  }
-}else { echo ("Такой книги в базе нет"); }
+if(empty($title)) {
+echo '<font color="red">title field is empty.</font><br>';
+}
+if(empty($text)) {
+echo '<font color="red">text field is empty.</font><br>';
+}		
+} else {	
+$result = mysqli_query($conn, "UPDATE polka1 SET author='$author',title='$title',text='$text' WHERE id=$id");
+header("Location: allauthor.php");
+}
 }
 ?>
-<form method='post' action='allauthor.php'><b/>
-<input id='submitread'  type='submit' value="Вернуться к поиску"><b/><b/>
-</form>
-<form method="post" action="index.html">
-<input id="submitback" type="submit" value="На главную">
-</form>
 </body>
 </html>
