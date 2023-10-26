@@ -13,39 +13,44 @@ require_once 'connect.php'; // Подключает файл с логином/�
 if($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["id"]))
 {
     $userid = $conn->real_escape_string($_GET["id"]);
-    $sql = "SELECT * FROM Users WHERE id = '$userid'";
+    $sql = "SELECT * FROM polka1 WHERE id = '$userid'";
     if($result = $conn->query($sql)){
         if($result->num_rows > 0){
             foreach($result as $row){
-                $username = $row["name"];
-                $userage = $row["age"];
+                $userauthor = $row["author"];
+                $usertitle = $row["title"];
+               $usertext=$row["text"];
             }
-            echo "<h3>Обновление пользователя</h3>
+            echo "<h3>Обновление записи № $id </h3>
                 <form method='post'>
                     <input type='hidden' name='id' value='$userid' />
-                    <p>Имя:
-                    <input type='text' name='name' value='$username' /></p>
-                    <p>Возраст:
-                    <input type='number' name='age' value='$userage' /></p>
+                    <p>Автор:
+                    <input type='text' name='author' value='$userauthor' /></p>
+                    <p>Наим-ние:
+                    <input type='text' name='title' value='$usertitle' /></p>
+                    <p>Текст:
+                    <input type='text' name='text' value='$usertext' /></p>
                     <input type='submit' value='Сохранить'>
             </form>";
         }
         else{
-            echo "<div>Пользователь не найден</div>";
+            echo "<div>Запись не найдена</div>";
         }
         $result->free();
     } else{
         echo "Ошибка: " . $conn->error;
     }
 }
-elseif (isset($_POST["id"]) && isset($_POST["name"]) && isset($_POST["age"])) {
+elseif (isset($_POST["id"]) && isset($_POST["author"]) && isset($_POST["title"]) && isset($_POST["text"])) {
       
     $userid = $conn->real_escape_string($_POST["id"]);
-    $username = $conn->real_escape_string($_POST["name"]);
-    $userage = $conn->real_escape_string($_POST["age"]);
-    $sql = "UPDATE Users SET name = '$username', age = '$userage' WHERE id = '$userid'";
+    $userauthor = $conn->real_escape_string($_POST["author"]);
+    $usertitle = $conn->real_escape_string($_POST["title"]);
+       $usertext = $conn->real_escape_string($_POST["text"]);
+    $sql = "UPDATE polka1 SET author = '$userauthor', title = '$usertitle', text = '$usertext' WHERE id = '$userid'";
+      echo $sql;
     if($result = $conn->query($sql)){
-        header("Location: index.php");
+        echo "\n Zapis $userid obnovlena";
     } else{
         echo "Ошибка: " . $conn->error;
     }
