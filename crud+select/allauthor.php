@@ -39,7 +39,8 @@ while($row = mysqli_fetch_array($result));
 <br>
 <input id='submittitle'  type='submit' value='Поиск но названию'><b><b>
 </form>
-  <form method='post' action='update.php'><b>
+  <form method='get' action='update2.php'><b>
+   <input id="Nknig" type='text' name='id' placeholder="ID"><b></b>
 <br>
 <input id='submitupdate'  type='submit' value='Обновить...'><b><b>
 </form>
