@@ -16,7 +16,7 @@ if (!($id)) {
 else {
 $sql_select = "DELETE * FROM polka1 WHERE id='$id'";
 $result = mysqli_query($conn,$sql_select);
-if (!($result)) {
+if (($result)) {
   echo("Запись $id удалена"):
     }
 else { echo ("Запись не удалена"); }
